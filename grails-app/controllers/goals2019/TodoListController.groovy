@@ -6,10 +6,12 @@ class TodoListController {
     def title = "this is a title"
 
     def index() {
-        println "is this hit?"
         render(view: 'todoList', model:[list: list, title: title])
     }
 
     def addItem() {
+        // no back end yet, so using title to display what was submitted
+        title = "${params.newTask}"
+        render(view: 'todoList', model:[list: list, title: title])
     }
 }
