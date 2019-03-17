@@ -60,7 +60,7 @@
             <p>
                 Let's learn and make something.
             </p>
-            <p><g:link controller="TodoListController" action="index">To Do App</g:link></p>
+            <p><g:link controller="TodoList" action="index">To Do App</g:link></p>
 
 
         </section>
