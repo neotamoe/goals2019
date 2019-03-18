@@ -1,5 +1,6 @@
 package goals2019
 
+
 class TodoListController {
 
 //    def list = ['grocery shopping', 'play soccer', 'eat ice cream', 'read book']
@@ -8,7 +9,7 @@ class TodoListController {
     TodoListService todoListService
 
     def index() {
-        list = todoListService.findAll()
+        list = TodoItem.getAll()
         println('list in index is: ' + list)
         render(view: 'todoList', model:[list: list, title: title])
     }
@@ -17,7 +18,8 @@ class TodoListController {
         // no back end yet, so using title to display what was submitted
         title = "${params.newTask}"
         todoListService.save(title)
-        list = todoListService.findAll()
+        list = TodoItem.getAll()
+        println('list in addItem is: ' + list)
         render(view: 'todoList', model:[list: list, title: title])
     }
 }
