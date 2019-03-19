@@ -8,9 +8,6 @@ buildscript {
         classpath "org.grails:grails-gradle-plugin:$grailsVersion"
         classpath "org.grails.plugins:hibernate5:${gormVersion-".RELEASE"}"
         classpath "com.bertramlabs.plugins:asset-pipeline-gradle:2.14.8"
-//        classpath "org.grails.plugins:hibernate5:6.0.3"
-//        classpath 'org.postgresql:postgresql:9.4.1211.jre7'
-//        classpath 'org.postgresql:postgresql:42.2.5'
     }
 }
 
@@ -53,12 +50,9 @@ dependencies {
     compile "org.grails.plugins:gsp"
     console "org.grails:grails-console"
     compile 'org.grails.plugins:postgresql-extensions:4.8.0'
-//    compile 'org.postgresql:postgresql:9.4.1211.jre7'
-//    compile 'org.postgresql:postgresql:42.2.5'
     compile 'org.postgresql:postgresql:42.2.5.jre7'
     profile "org.grails.profiles:web"
     runtime "org.glassfish.web:el-impl:2.1.2-b03"
-//    runtime "com.h2database:h2"
     runtime "org.apache.tomcat:tomcat-jdbc"
     runtime "com.bertramlabs.plugins:asset-pipeline-grails:2.14.8"
     testCompile "org.grails:grails-gorm-testing-support"
