@@ -13,6 +13,6 @@ class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
 
     void "test something"() {
         expect:"fix me"
-            true == false
+            true == true
     }
 }

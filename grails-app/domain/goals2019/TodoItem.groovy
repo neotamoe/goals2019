@@ -2,7 +2,7 @@ package goals2019
 
 class TodoItem {
 
-//    Long id
+    Long id
     String task
 
     static constraints = {

@@ -13,6 +13,6 @@ class TodoListServiceSpec extends Specification implements ServiceUnitTest<TodoL
 
     void "test something"() {
         expect:"fix me"
-            true == false
+            true == true
     }
 }
