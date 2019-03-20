@@ -6,5 +6,7 @@ class TodoItem {
     String task
 
     static constraints = {
+        task blank: false, maxSize: 255
+
     }
 }
