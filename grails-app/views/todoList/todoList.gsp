@@ -1,6 +1,6 @@
 <div>
     <h1>To Do List</h1>
-    <g:form controller="TodoList" action="addTask">
+    <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off">
         <input type="text" placeholder="add task" name="newTask"/>
         <button type="submit">Add Task</button>
     </g:form>

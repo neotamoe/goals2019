@@ -12,15 +12,13 @@ class TodoListController {
     }
 
     def addTask() {
-        String newTask = params.newTask
-        todoListService.save(newTask)
+        todoListService.save(params.newTask)
         list = TodoItem.getAll()
-        render(view: 'todoList', model:[list: list])
+        redirect(view: 'todoList', model:[list: list])
     }
 
     def deleteTask() {
-        println(params.taskId)
         list = todoListService.deleteTask(params.taskId)
-        render(view: 'todoList', model:[list: list])
+        redirect(view: 'todoList', model:[list: list])
     }
 }
