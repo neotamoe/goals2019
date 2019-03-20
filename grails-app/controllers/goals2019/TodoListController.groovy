@@ -17,4 +17,10 @@ class TodoListController {
         list = TodoItem.getAll()
         render(view: 'todoList', model:[list: list])
     }
+
+    def deleteTask() {
+        println(params.taskId)
+        list = todoListService.deleteTask(params.taskId)
+        render(view: 'todoList', model:[list: list])
+    }
 }

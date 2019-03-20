@@ -7,7 +7,13 @@
     <g:if test="${list.size()>0}">
         <ul>
             <g:each var="item" in="${list}">
-                <li>${item.task}</li>
+                <li>${item.task}
+                    <button>
+                        <g:link controller="TodoList" action="deleteTask" params="${[taskId: item.id]}">
+                            Done!
+                        </g:link>
+                    </button>
+                </li>
             </g:each>
         </ul>
     </g:if>
