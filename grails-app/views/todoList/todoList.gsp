@@ -15,6 +15,7 @@
                 <table class="table table-bordered">
                     <thead>
                     <th>Task</th>
+                    <th>Done</th>
                     <th>Delete</th>
                     <th>Edit</th>
                     </thead>
@@ -25,13 +26,18 @@
                                 ${item.task}
                             </td>
                             <td>
-                                <g:link controller="TodoList" action="editTask" params="${[taskId: item.id]}">
-                                    &#10000;
+                                <g:link controller="TodoList" action="completeTask" params="${[taskId: item.id]}" class="green">
+                                    &#10004;
                                 </g:link>
                             </td>
                             <td>
-                                <g:link controller="TodoList" action="deleteTask" params="${[taskId: item.id]}">
-                                    &#10004;
+                                <g:link controller="TodoList" action="deleteTask" params="${[taskId: item.id]}" class="red">
+                                    &#10008;
+                                </g:link>
+                            </td>
+                            <td>
+                                <g:link controller="TodoList" action="editTask" params="${[taskId: item.id]}">
+                                    &#9999;
                                 </g:link>
                             </td>
                         </tr>

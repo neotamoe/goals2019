@@ -1061,3 +1061,11 @@ html, body, .st-container, .st-pusher, .st-content {
 td > a {
     text-decoration: none;
 }
+
+.red {
+    color: red;
+}
+
+.green {
+    color: green;
+}
