@@ -6,7 +6,9 @@ import grails.gorm.transactions.Transactional
 class TodoListService {
 
     def save(task) {
-        TodoItem newTask = new TodoItem(task: task)
+        Date today = new Date()
+        println("today in save: " + today)
+        TodoItem newTask = new TodoItem(task: task, createdOn: today, updatedOn: today)
         newTask.save()
     }
 
