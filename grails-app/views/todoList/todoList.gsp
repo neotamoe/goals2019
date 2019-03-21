@@ -5,7 +5,7 @@
         <meta name="layout" content="main">
     </head>
     <body>
-        <div>
+        <div class="container">
             <h1>To Do List</h1>
             <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off">
                 <input type="text" placeholder="add task" name="newTask"/>
@@ -26,7 +26,7 @@
                             </td>
                             <td>
                                 <g:link controller="TodoList" action="editTask" params="${[taskId: item.id]}">
-                                    &#9998;
+                                    &#10000;
                                 </g:link>
                             </td>
                             <td>

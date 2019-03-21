@@ -1057,3 +1057,7 @@ html, body, .st-container, .st-pusher, .st-content {
         float: none;
     }
 }
+
+td > a {
+    text-decoration: none;
+}
