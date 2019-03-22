@@ -19,6 +19,7 @@ class TodoListController {
 
     def deleteTask() {
         list = todoListService.deleteTask(params.taskId)
+        list = TodoItem.getAll()
         redirect(view: 'todoList', model:[list: list])
     }
 
@@ -30,6 +31,7 @@ class TodoListController {
 
     def updateTask() {
         todoListService.updateTask(params.id, params.task)
+        list = TodoItem.getAll()
         redirect(view: 'todoList', model: [list: list])
     }
 }
