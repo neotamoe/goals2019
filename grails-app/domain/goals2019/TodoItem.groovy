@@ -1,7 +1,5 @@
 package goals2019
 
-import java.time.LocalDate
-
 class TodoItem {
 
     Long id

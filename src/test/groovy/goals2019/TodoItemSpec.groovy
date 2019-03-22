@@ -3,6 +3,13 @@ package goals2019
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZonedDateTime
+
 class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
 
     def setup() {
@@ -43,5 +50,14 @@ class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
 
         then: 'task validation passes'
         domain.validate(['task'])
+    }
+
+    void 'test createdOn accepts a date without timezone'() {
+        when: 'for a date provided'
+        Date today = new Date()
+        domain.createdOn = today
+
+        then: 'test validation passes'
+        domain.validate(['createdOn'])
     }
 }
