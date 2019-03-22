@@ -19,4 +19,14 @@ class TodoListService {
         TodoItem.getAll()
     }
 
+    def updateTask(id, task) {
+        println("id and task in updateTask: " + id + " and " + task)
+        Date today = new Date()
+        TodoItem taskToUpdate = TodoItem.get(id)
+        taskToUpdate.updatedOn = today
+        taskToUpdate.task = task
+        taskToUpdate.save()
+        TodoItem.getAll()
+    }
+
 }

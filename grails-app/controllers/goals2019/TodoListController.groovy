@@ -21,4 +21,15 @@ class TodoListController {
         list = todoListService.deleteTask(params.taskId)
         redirect(view: 'todoList', model:[list: list])
     }
+
+    def editTask() {
+        println('taskId in editTask: ' + params.taskId)
+        TodoItem item = TodoItem.findById(params.taskId)
+        render(view: 'editTask', model:[item: item])
+    }
+
+    def updateTask() {
+        todoListService.updateTask(params.id, params.task)
+        redirect(view: 'todoList', model: [list: list])
+    }
 }
