@@ -18,7 +18,7 @@ class TodoListController {
     }
 
     def deleteTask() {
-        list = todoListService.deleteTask(params.taskId)
+        todoListService.deleteTask(params.taskId)
         list = TodoItem.getAll()
         redirect(view: 'todoList', model:[list: list])
     }

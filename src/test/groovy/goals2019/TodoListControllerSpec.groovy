@@ -11,6 +11,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
     }
 
     def setup() {
+        new TodoItem(task: 'create test', createdOn: new Date().format('yyyy-MM-dd')).save()
     }
 
     def cleanup() {
@@ -21,7 +22,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
             true == true
     }
 
-    void "add task will call controller"(){
+    void "add task will call service save"(){
         given:
         params.newTask = "new task to add"
         controller.todoListService = Stub(TodoListService) {
@@ -34,12 +35,39 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService.save('new task to add')
     }
 
+    void "delete task will call service deleteTask"(){
+        given:
+        params.taskId = 1
+        controller.todoListService = Stub(TodoListService) {
+        }
+
+        when:
+        controller.deleteTask()
+
+        then:
+        controller.todoListService.deleteTask(1)
+    }
+
+    void "update task will call service updateTask"(){
+        given:
+        params.taskId = 1
+        params.task = 'new task to add'
+        controller.todoListService = Stub(TodoListService) {
+        }
+
+        when:
+        controller.updateTask()
+
+        then:
+        controller.todoListService.updateTask(params.taskId, params.task)
+    }
+
     void "test if index loads"() {
         given:
         List<TodoItem> list = [
-                new TodoItem(task: 'create test', createdOn: '2019-03-20'),
-                new TodoItem(task: 'mock the right things', createdOn: '2019-03-21'),
-                new TodoItem(task: 'run the tests', createdOn: '2019-03-22')
+                new TodoItem(task: 'create test', createdOn: new Date()),
+                new TodoItem(task: 'mock the right things', createdOn: new Date()),
+                new TodoItem(task: 'run the tests', createdOn: new Date())
         ]
 
         when:
