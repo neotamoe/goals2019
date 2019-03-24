@@ -3,13 +3,6 @@ package goals2019
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.ZonedDateTime
-
 class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
 
     def setup() {
