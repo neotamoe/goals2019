@@ -11,7 +11,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
     }
 
     def setup() {
-        new TodoItem(task: 'create test', createdOn: new Date().format('yyyy-MM-dd')).save()
+        new TodoItem(task: 'create test', createdOn: new Date()).save()
     }
 
     def cleanup() {
@@ -33,6 +33,8 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.save('new task to add')
+        '/todoList/addTask.gsp' == view
+
     }
 
     void "delete task will call service deleteTask"(){
@@ -46,6 +48,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.deleteTask(1)
+        '/todoList/deleteTask.gsp' == view
     }
 
     void "update task will call service updateTask"(){
@@ -60,6 +63,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.updateTask(params.taskId, params.task)
+        '/todoList/updateTask.gsp' == view
     }
 
     void "test if index loads"() {
@@ -77,6 +81,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         then:
         response.status == 200
         list.size() == 3
+        '/todoList/todoList' == view
 
     }
 
