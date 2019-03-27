@@ -8,7 +8,7 @@ class TodoListService {
     // TODO: Use java.time instead of java.util.Date - will need to change in service and controller
     def save(task) {
         Date today = new Date()
-        TodoItem newTask = new TodoItem(task: task, createdOn: today, updatedOn: today)
+        TodoItem newTask = new TodoItem(task: task, createdOn: today, updatedOn: today, isCompleted: false)
         newTask.save()
     }
 
@@ -25,4 +25,10 @@ class TodoListService {
         taskToUpdate.save()
     }
 
+    def completeTask(id) {
+        TodoItem completedTask = TodoItem.findById(id)
+        completedTask.updatedOn = new Date()
+        completedTask.isCompleted = true
+        completedTask.save()
+    }
 }

@@ -34,4 +34,10 @@ class TodoListController {
         list = TodoItem.getAll()
         redirect(view: 'todoList', model: [list: list])
     }
+
+    def completeTask() {
+        todoListService.completeTask(params.taskId)
+        list = TodoItem.getAll()
+        redirect(view: 'todoList', model: [list: list])
+    }
 }
