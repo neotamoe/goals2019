@@ -24,7 +24,6 @@ class TodoListController {
     }
 
     def editTask() {
-        println('taskId in editTask: ' + params.taskId)
         TodoItem item = TodoItem.findById(params.taskId)
         render(view: 'editTask', model:[item: item])
     }
