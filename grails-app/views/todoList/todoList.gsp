@@ -57,7 +57,6 @@
                     <table class="table table-bordered">
                         <thead>
                         <th>Task</th>
-                        %{--<th></th>--}%
                         <th>Delete</th>
                         <th>Edit</th>
                         </thead>
@@ -67,11 +66,6 @@
                                 <td style="width: 50%">
                                     ${item.task}
                                 </td>
-                                %{--<td>--}%
-                                    %{--<g:link controller="TodoList" action="completeTask" params="${[taskId: item.id]}" class="green">--}%
-                                        %{--&#10004;--}%
-                                    %{--</g:link>--}%
-                                %{--</td>--}%
                                 <td>
                                     <g:link controller="TodoList" action="deleteTask" params="${[taskId: item.id]}" class="red">
                                         &#10008;
