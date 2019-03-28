@@ -4,11 +4,13 @@ package goals2019
 class TodoListController {
 
     List<TodoItem> list
+    List<TodoItem> completed
     TodoListService todoListService
 
     def index() {
-        list = TodoItem.getAll()
-        render(view: 'todoList', model:[list: list])
+        list = TodoItem.findAllByIsCompleted(false)
+        completed = TodoItem.findAllByIsCompleted(true)
+        render(view: 'todoList', model:[list: list, completed: completed])
     }
 
     def addTask() {
