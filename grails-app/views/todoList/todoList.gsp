@@ -8,7 +8,7 @@
         <div class="container">
             <h1>Add Task</h1>
             <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off">
-                <input type="text" placeholder="add task" name="newTask"/>
+                <input type="text" placeholder="What's on your to do list?" name="newTask" style="width: 25%"/>
                 <button type="submit">Add Task</button>
             </g:form>
             <div>
@@ -16,7 +16,7 @@
                 <g:if test="${list.size()>0}">
                     <table class="table table-bordered">
                         <thead>
-                        <th>Task</th>
+                        <th style="width: 50%">Task</th>
                         <th>Done</th>
                         <th>Delete</th>
                         <th>Edit</th>
