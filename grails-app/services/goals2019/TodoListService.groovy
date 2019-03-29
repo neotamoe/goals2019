@@ -37,4 +37,13 @@ class TodoListService {
         taskToMove.isCompleted = false
         taskToMove.save()
     }
+
+    def searchTasks(search) {
+        println(search)
+        String searchLike = "%" + search + "%".toLowerCase()
+        if (searchLike.contains(" ")) {
+            searchLike = searchLike.replaceAll("[,\\s;\\-()/]","%")
+        }
+        List<TodoItem> results = TodoItem.findAllByTaskIlike(searchLike)
+    }
 }

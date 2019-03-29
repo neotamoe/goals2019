@@ -6,14 +6,23 @@
     </head>
     <body>
         <div class="container">
-            <h1>Add Task</h1>
-            <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off">
-                <input type="text" placeholder="What's on your to do list?" name="newTask" style="width: 25%"/>
-                <button type="submit">Add Task</button>
-            </g:form>
+            <div style="display: inline-block; width: 50%;">
+                <h1>Add Task</h1>
+                <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off" >
+                    <input type="text" placeholder="What's on your to do list?" name="newTask" style="width: 70%"/>
+                    <button type="submit">Add Task</button>
+                </g:form>
+            </div>
+            <div style="display: inline-block; width: 49%;">
+                <h1>Search Tasks</h1>
+                <g:form name="search" controller="TodoList" action="searchTasks" method="POST" autocomplete="off" >
+                    <input type="text" placeholder="What are you looking for?" name="search" style="width: 70%"/>
+                    <button type="search">Search</button>
+                </g:form>
+            </div>
             <div>
                 <h1>To Do List</h1>
-                <g:if test="${list.size()>0}">
+                <g:if test="${list?.size()>0}">
                     <table class="table table-bordered">
                         <thead>
                         <th style="width: 50%">Task</th>
@@ -52,7 +61,7 @@
                 </g:else>
             </div>
             <div>
-                <g:if test="${completed.size()>0}">
+                <g:if test="${completed?.size()>0}">
                     <h1>Completed Tasks</h1>
                     <table class="table table-bordered">
                         <thead>

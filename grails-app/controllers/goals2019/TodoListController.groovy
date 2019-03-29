@@ -40,4 +40,19 @@ class TodoListController {
         todoListService.moveToList(params.taskId)
         redirect(view: 'todoList')
     }
+
+    def searchTasks() {
+        List<TodoItem> list = new ArrayList<TodoItem>()
+        List<TodoItem> completed = new ArrayList<TodoItem>()
+        List<TodoItem> results = todoListService.searchTasks(params.search)
+        results?.each {
+//            print(it)
+            if(it.isCompleted){
+                completed.add(it)
+            } else {
+                list.add(it)
+            }
+        }
+         render(view: 'searchResults', model:[list: list, completed: completed])
+    }
 }
