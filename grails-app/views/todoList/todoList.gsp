@@ -52,8 +52,8 @@
                 </g:else>
             </div>
             <div>
-                <h1>Completed Tasks</h1>
                 <g:if test="${completed.size()>0}">
+                    <h1>Completed Tasks</h1>
                     <table class="table table-bordered">
                         <thead>
                         <th>Task</th>
