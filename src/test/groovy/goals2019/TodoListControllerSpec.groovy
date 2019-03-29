@@ -90,7 +90,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         '/todoList/editTask' == view
     }
 
-    void "test if completeTask calls right service method and renders correct view"() {
+    void "test if completeTask calls right service method"() {
         given:
         params.taskId = 1
         controller.todoListService = Stub(TodoListService) {
@@ -103,4 +103,16 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService.completeTask(params.taskId)
     }
 
+    void "test if moveToList calls right service method"() {
+        given:
+        params.taskId = 1
+        controller.todoListService = Stub(TodoListService) {
+        }
+
+        when:
+        controller.moveToList()
+
+        then:
+        controller.todoListService.moveToList(params.taskId)
+    }
 }

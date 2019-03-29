@@ -102,6 +102,32 @@ class TodoListServiceSpec extends Specification implements DataTest  {
         taskCompleted.isCompleted == true
     }
 
+    def 'test moving task back to list'() {
+        when: 'tasks are already in db'
+        TodoItem.saveAll(
+                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
+        )
+
+        then:
+        TodoItem.count() == 3
+        TodoItem taskCompleted = TodoItem.findById(2)
+        !taskCompleted.isCompleted
+
+        when: 'service is called to complete task'
+        todoListService.completeTask(2)
+
+        then:
+        taskCompleted.isCompleted
+
+        when: 'service is called to move task back to list'
+        todoListService.moveToList(2)
+
+        then:
+        !taskCompleted.isCompleted
+    }
+
     def 'test getAll'() {
         when: 'tasks are already in db'
         TodoItem.saveAll(
