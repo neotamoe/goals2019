@@ -18,9 +18,8 @@ class TodoListService {
     }
 
     def updateTask(id, task) {
-        Date today = new Date()
         TodoItem taskToUpdate = TodoItem.findById(id)
-        taskToUpdate.updatedOn = today
+        taskToUpdate.updatedOn = new Date()
         taskToUpdate.task = task
         taskToUpdate.save()
     }
@@ -30,5 +29,12 @@ class TodoListService {
         completedTask.updatedOn = new Date()
         completedTask.isCompleted = true
         completedTask.save()
+    }
+
+    def moveToList(id) {
+        TodoItem taskToMove = TodoItem.findById(id)
+        taskToMove.updatedOn = new Date()
+        taskToMove.isCompleted = false
+        taskToMove.save()
     }
 }

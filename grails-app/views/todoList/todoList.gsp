@@ -58,7 +58,7 @@
                         <thead>
                         <th>Task</th>
                         <th>Delete</th>
-                        <th>Edit</th>
+                        <th>Move to List</th>
                         </thead>
                         <tbody>
                         <g:each var="item" in="${completed}">
@@ -66,14 +66,14 @@
                                 <td style="width: 50%">
                                     ${item.task}
                                 </td>
-                                <td>
+                                <td style="width: 25%">
                                     <g:link controller="TodoList" action="deleteTask" params="${[taskId: item.id]}" class="red">
                                         &#10008;
                                     </g:link>
                                 </td>
-                                <td>
-                                    <g:link controller="TodoList" action="editTask" params="${[taskId: item.id]}">
-                                        &#9999;
+                                <td style="width: 25%">
+                                    <g:link controller="TodoList" action="moveToList" params="${[taskId: item.id]}">
+                                        &#11014;
                                     </g:link>
                                 </td>
                             </tr>

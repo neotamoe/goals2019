@@ -35,4 +35,9 @@ class TodoListController {
         todoListService.completeTask(params.taskId)
         redirect(view: 'todoList')
     }
+
+    def moveToList() {
+        todoListService.moveToList(params.taskId)
+        redirect(view: 'todoList')
+    }
 }
