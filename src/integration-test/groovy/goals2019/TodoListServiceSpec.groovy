@@ -128,6 +128,60 @@ class TodoListServiceSpec extends Specification implements DataTest  {
         !taskCompleted.isCompleted
     }
 
+    def 'test search task with single word'() {
+        when: 'tasks are already in db'
+        TodoItem.saveAll(
+                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
+        )
+
+        then:
+        TodoItem.count() == 3
+
+        when: 'service is called to search tasks'
+        String search = "task"
+        todoListService.searchTasks(search)
+
+        then:
+        String searchLike = "%" + search + "%".toLowerCase()
+
+        when:
+        List<TodoItem> results = TodoItem.findAllByTaskIlike(searchLike)
+
+        then:
+        results.size() == 3
+    }
+
+    def 'test search task with two words'() {
+        when: 'tasks are already in db'
+        TodoItem.saveAll(
+                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
+        )
+
+        then:
+        TodoItem.count() == 3
+
+        when: 'service is called to search tasks'
+        String search = "task one"
+        todoListService.searchTasks(search)
+        String searchLike = "%" + search + "%".toLowerCase()
+        searchLike = searchLike.replaceAll("[,\\s;\\-()/]","%")
+
+        then:
+        searchLike == "%task%one%"
+
+        when:
+        List<TodoItem> results = TodoItem.findAllByTaskIlike(searchLike)
+
+        then:
+        results.size() == 1
+        results[0].task == "task one"
+
+    }
+
     def 'test getAll'() {
         when: 'tasks are already in db'
         TodoItem.saveAll(
