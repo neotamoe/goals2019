@@ -26,9 +26,9 @@
                     <table class="table table-bordered">
                         <thead>
                         <th style="width: 50%">Task</th>
-                        <th>Done</th>
-                        <th>Delete</th>
-                        <th>Edit</th>
+                        <th style="width: 16%">Mark as Done</th>
+                        <th style="width: 16%">Delete</th>
+                        <th style="width: 16%">Edit</th>
                         </thead>
                         <tbody>
                         <g:each var="item" in="${list}">
@@ -71,7 +71,7 @@
                         </thead>
                         <tbody>
                         <g:each var="item" in="${completed}">
-                            <tr>
+                            <tr style="background-color: lightgray">
                                 <td style="width: 50%">
                                     ${item.task}
                                 </td>

@@ -46,13 +46,12 @@ class TodoListController {
         List<TodoItem> completed = new ArrayList<TodoItem>()
         List<TodoItem> results = todoListService.searchTasks(params.search)
         results?.each {
-//            print(it)
             if(it.isCompleted){
                 completed.add(it)
             } else {
                 list.add(it)
             }
         }
-         render(view: 'searchResults', model:[list: list, completed: completed])
+         render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
     }
 }

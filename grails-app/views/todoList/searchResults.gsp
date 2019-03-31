@@ -7,7 +7,8 @@
 <body>
 <div class="container" style="margin-top: 15px">
     <div>
-        <h1>Search Results</h1>
+        <g:link controller="TodoList" action="index">Back to List</g:link>
+        <h1>Search Results for "${search}"</h1>
         <g:if test="${list?.size()>0}">
             <table class="table table-bordered">
                 <thead>
