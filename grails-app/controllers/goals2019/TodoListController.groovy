@@ -12,11 +12,13 @@ class TodoListController {
     }
 
     def addTask() {
+        log.debug("adding task: " + params.newTask)
         todoListService.save(params.newTask)
         redirect(view: 'todoList')
     }
 
     def deleteTask() {
+        log.debug("deleting task: " + params.taskId)
         todoListService.deleteTask(params.taskId)
         redirect(view: 'todoList')
     }
