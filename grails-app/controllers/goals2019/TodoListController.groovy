@@ -12,9 +12,16 @@ class TodoListController {
     }
 
     def addTask(TodoItem requestItem) {
-        log.debug("adding task: " + params.task)
-        def persistedItem = todoListService.addTask(requestItem)
-        forward(view: 'todoList', model:[item: persistedItem])
+        log.debug("adding task: " + requestItem.task)
+        if(requestItem.validate()) {
+            def persistedItem = todoListService.addTask(requestItem)
+            forward(view: 'todoList', model:[item: persistedItem])
+        } else {
+            requestItem.errors.allErrors.each {
+                log.error("error in add task: Property [${it.arguments[0]}] of class [${it.arguments[1]}] cannot be null")
+            }
+            forward(view: 'todoList', model: [item: requestItem])
+        }
     }
 
     def deleteTask() {

@@ -10,5 +10,8 @@ class TodoItem {
 
     static constraints = {
         task blank: false, maxSize: 255
+        createdOn nullable: true
+        updatedOn nullable: true
+        isCompleted nullable: true
     }
 }
