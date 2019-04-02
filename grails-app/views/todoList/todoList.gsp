@@ -9,8 +9,11 @@
             <div style="display: inline-block; width: 50%;">
                 <h1>Add Task</h1>
                 <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off" >
-                    <input type="text" placeholder="What's on your to do list?" name="newTask" style="width: 70%"/>
+                    <input type="text" placeholder="What's on your to do list?" name="task" style="width: 70%"/>
                     <button type="submit">Add Task</button>
+                    <g:hasErrors>
+                        <g:eachError><p><g:message error="${it}"/></p></g:eachError>
+                    </g:hasErrors>
                 </g:form>
             </div>
             <div style="display: inline-block; width: 49%;">

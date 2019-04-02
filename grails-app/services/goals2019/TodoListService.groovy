@@ -6,10 +6,12 @@ import grails.gorm.transactions.Transactional
 class TodoListService {
 
     // TODO: Use java.time instead of java.util.Date - will need to change in service and controller
-    def save(task) {
+    def addTask(requestItem) {
         Date today = new Date()
-        TodoItem newTask = new TodoItem(task: task, createdOn: today, updatedOn: today, isCompleted: false)
-        newTask.save()
+        requestItem.createdOn = today
+        requestItem.updatedOn = today
+        requestItem.isCompleted = false
+        requestItem.save()
     }
 
     def deleteTask(id) {

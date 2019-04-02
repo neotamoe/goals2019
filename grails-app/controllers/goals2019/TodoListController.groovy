@@ -6,88 +6,54 @@ class TodoListController {
     TodoListService todoListService
 
     def index() {
-        List<TodoItem> list = null
-        List<TodoItem> completed = null
-        try {
-            list = TodoItem.findAllByIsCompleted(false)
-            completed = TodoItem.findAllByIsCompleted(true)
-        } catch(Exception ex) {
-            log.error("Error in getting lists for index ${ex.message}", ex)
-        }
+        List<TodoItem> list = TodoItem.findAllByIsCompleted(false)
+        List<TodoItem> completed  = TodoItem.findAllByIsCompleted(true)
         render(view: 'todoList', model:[list: list, completed: completed])
     }
 
-    def addTask() {
-        log.debug("adding task: " + params.newTask)
-        try {
-            todoListService.save(params.newTask)
-        } catch(Exception ex) {
-            log.error("Error in adding task ${ex.message}", ex)
-        }
-        redirect(view: 'todoList')
+    def addTask(TodoItem requestItem) {
+        log.debug("adding task: " + params.task)
+        def persistedItem = todoListService.addTask(requestItem)
+        forward(view: 'todoList', model:[item: persistedItem])
     }
 
     def deleteTask() {
         log.debug("deleting task: " + params.taskId)
-        try {
-            todoListService.deleteTask(params.taskId)
-        } catch(Exception ex) {
-            log.error("Error in deleting task ${ex.message}", ex)
-        }
+        todoListService.deleteTask(params.taskId)
         redirect(view: 'todoList')
     }
 
     def editTask() {
-        try {
-            TodoItem item = TodoItem.findById(params.taskId)
-            render(view: 'editTask', model:[item: item])
-        } catch(Exception ex) {
-            log.error("Error in edit task ${ex.message}", ex)
-        }
+        TodoItem item = TodoItem.findById(params.taskId)
+        render(view: 'editTask', model:[item: item])
     }
 
     def updateTask() {
-        try {
-            todoListService.updateTask(params.id, params.task)
-            redirect(view: 'todoList')
-        } catch(Exception ex) {
-            log.error("error in update task ${ex.message}", ex)
-        }
+        todoListService.updateTask(params.id, params.task)
+        redirect(view: 'todoList')
     }
 
     def completeTask() {
-        try {
-            todoListService.completeTask(params.taskId)
-            redirect(view: 'todoList')
-        } catch(Exception ex) {
-            log.error("error in complete task ${ex.message}", ex)
-        }
+        todoListService.completeTask(params.taskId)
+        redirect(view: 'todoList')
     }
 
     def moveToList() {
-        try {
-            todoListService.moveToList(params.taskId)
-            redirect(view: 'todoList')
-        } catch(Exception ex) {
-            log.error("error in move to list ${ex.message}", ex)
-        }
+        todoListService.moveToList(params.taskId)
+        redirect(view: 'todoList')
     }
 
     def searchTasks() {
-        try {
-            List<TodoItem> list = new ArrayList<TodoItem>()
-            List<TodoItem> completed = new ArrayList<TodoItem>()
-            List<TodoItem> results = todoListService.searchTasks(params.search)
-            results?.each {
-                if(it.isCompleted){
-                    completed.add(it)
-                } else {
-                    list.add(it)
-                }
+        List<TodoItem> list = new ArrayList<TodoItem>()
+        List<TodoItem> completed = new ArrayList<TodoItem>()
+        List<TodoItem> results = todoListService.searchTasks(params.search)
+        results?.each {
+            if(it.isCompleted){
+                completed.add(it)
+            } else {
+                list.add(it)
             }
-            render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
-        } catch(Exception ex) {
-            log.error("error in search tasks ${ex.message}", ex)
         }
+        render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
     }
 }
