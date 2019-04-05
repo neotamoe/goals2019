@@ -8,10 +8,8 @@ class TodoListService {
     // TODO: Use java.time instead of java.util.Date - will need to change in service and controller
     def addTask(requestItem) {
         Date today = new Date()
-        requestItem.createdOn = today
-        requestItem.updatedOn = today
-        requestItem.isCompleted = false
-        requestItem.save(flush: true)
+        TodoItem itemToAdd = new TodoItem(task: requestItem.task, createdOn: today, updatedOn: today, isCompleted: false)
+        itemToAdd.save(flush: true)
     }
 
     def deleteTask(id) {

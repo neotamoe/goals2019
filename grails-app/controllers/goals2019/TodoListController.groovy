@@ -6,6 +6,7 @@ class TodoListController {
     TodoListService todoListService
 
     def index() {
+        log.debug("to do list index")
         List<TodoItem> list = TodoItem.findAllByIsCompleted(false)
         List<TodoItem> completed  = TodoItem.findAllByIsCompleted(true)
         render(view: 'todoList', model:[list: list, completed: completed])
@@ -16,10 +17,6 @@ class TodoListController {
         def persistedItem = todoListService.addTask(requestItem)
         if(!persistedItem){
             log.error("Error in add task--task ${requestItem.task} was not saved")
-            requestItem.errors.allErrors.each {
-                log.error("add task error: ${it}")
-                println("add task error: ${it}")
-            }
             forward(view: 'todoList', model: [item: requestItem])
         } else {
             forward(view: 'todoList', model:[item: persistedItem])
