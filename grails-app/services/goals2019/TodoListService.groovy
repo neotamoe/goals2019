@@ -11,7 +11,7 @@ class TodoListService {
         requestItem.createdOn = today
         requestItem.updatedOn = today
         requestItem.isCompleted = false
-        requestItem.save()
+        requestItem.save(flush: true)
     }
 
     def deleteTask(id) {
@@ -23,21 +23,21 @@ class TodoListService {
         TodoItem taskToUpdate = TodoItem.findById(id)
         taskToUpdate.updatedOn = new Date()
         taskToUpdate.task = task
-        taskToUpdate.save()
+        taskToUpdate.save(flush: true)
     }
 
     def completeTask(id) {
         TodoItem completedTask = TodoItem.findById(id)
         completedTask.updatedOn = new Date()
         completedTask.isCompleted = true
-        completedTask.save()
+        completedTask.save(flush: true)
     }
 
     def moveToList(id) {
         TodoItem taskToMove = TodoItem.findById(id)
         taskToMove.updatedOn = new Date()
         taskToMove.isCompleted = false
-        taskToMove.save()
+        taskToMove.save(flush: true)
     }
 
     def searchTasks(search) {
