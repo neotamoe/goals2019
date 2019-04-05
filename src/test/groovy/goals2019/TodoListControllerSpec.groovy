@@ -24,18 +24,15 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
     void "add task will call service save"(){
         given:
-        params.newTask = "new task to add"
+        TodoItem newTask = new TodoItem(task: "new task to add")
         controller.todoListService = Stub(TodoListService) {
         }
 
         when:
-        controller.addTask()
+        controller.addTask(newTask)
 
         then:
-        controller.todoListService.save('new task to add')
-//        test says this view is correct, but deleteTask.gsp does not exist
-//        commenting out view assertion tests that don't have an actual gsp
-//        '/todoList/addTask.gsp' == view
+        controller.todoListService.addTask("new task to add")
 
     }
 

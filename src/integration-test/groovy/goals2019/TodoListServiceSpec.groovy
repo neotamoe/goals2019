@@ -29,7 +29,9 @@ class TodoListServiceSpec extends Specification implements DataTest  {
         TodoItem.count() == 3
 
         when: 'service is called to save'
-        todoListService.save('some new task')
+        Date today = new Date()
+        TodoItem newTask = new TodoItem(task: "some new task", isCompleted: false, createdOn: today, updatedOn: today)
+        todoListService.addTask(newTask)
         TodoItem taskAdded = TodoItem.findById(4)
 
         then:
