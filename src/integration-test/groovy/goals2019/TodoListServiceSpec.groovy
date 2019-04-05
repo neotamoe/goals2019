@@ -39,6 +39,27 @@ class TodoListServiceSpec extends Specification implements DataTest  {
         taskAdded.task == 'some new task'
     }
 
+    def 'test add task sad path (null task)'() {
+        when: 'tasks are already in database'
+        TodoItem.saveAll(
+                new TodoItem(task: 'task one', createdOn: new Date(), updatedOn: new Date()),
+                new TodoItem(task: 'task two', createdOn: new Date(), updatedOn: new Date()),
+                new TodoItem(task: 'task three', createdOn: new Date(), updatedOn: new Date())
+        )
+
+        then:
+        TodoItem.count() == 3
+
+        when: 'service is called to save'
+        Date today = new Date()
+        TodoItem newTask = new TodoItem(task: null, isCompleted: false, createdOn: today, updatedOn: today)
+        def taskAdded = todoListService.addTask(newTask)
+
+        then:
+        TodoItem.count() == 3
+        !taskAdded
+    }
+
     def 'test update task'() {
         when: 'tasks are already in database'
         TodoItem.saveAll(
