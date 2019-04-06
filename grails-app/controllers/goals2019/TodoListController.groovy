@@ -36,21 +36,36 @@ class TodoListController {
     }
 
     def updateTask() {
-        log.debug("updating task: " + params.id + " with new task: " + params.task)
-        todoListService.updateTask(params.id, params.task)
-        redirect(view: 'todoList')
+        log.debug("updating task: " + params.id + " with new task: " + params.task
+        def updatedItem = todoListService.updateTask(params.id, params.task)
+        if(!updatedItem){
+            log.error("Error in update task--id: ${params.id} NOT updated with new task ${params.task}")
+            forward(view: 'todoList', model: [item: updatedItem])
+        } else {
+            redirect(view: 'todoList')
+        }
     }
 
     def completeTask() {
         log.debug("completing task: " + params.taskId)
-        todoListService.completeTask(params.taskId)
-        redirect(view: 'todoList')
+        def completedTask = todoListService.completeTask(params.taskId)
+        if(!completedTask){
+            log.error("Error in complete task--id: ${params.taskId} not completed")
+            forward(view: 'todoList', model: [item: completedTask])
+        } else {
+            redirect(view: 'todoList')
+        }
     }
 
     def moveToList() {
         log.debug("moving task " + params.taskId + " back to list")
-        todoListService.moveToList(params.taskId)
-        redirect(view: 'todoList')
+        def movedItem = todoListService.moveToList(params.taskId)
+        if(!movedItem){
+            log.error("Error in move to list--task id: ${params.taskId} not moved")
+            forward(view: 'todoList', model: [item: movedItem])
+        } else {
+            redirect(view: 'todoList')
+        }
     }
 
     def searchTasks() {
@@ -58,13 +73,18 @@ class TodoListController {
         List<TodoItem> list = new ArrayList<TodoItem>()
         List<TodoItem> completed = new ArrayList<TodoItem>()
         List<TodoItem> results = todoListService.searchTasks(params.search)
-        results?.each {
-            if(it.isCompleted){
-                completed.add(it)
-            } else {
-                list.add(it)
+        if(!results){
+            log.error("Error in search tasks for ${params.search}")
+            forward(view: 'todoList', model: [item: results])
+        } else {
+            results?.each {
+                if(it.isCompleted){
+                    completed.add(it)
+                } else {
+                    list.add(it)
+                }
             }
+            render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
         }
-        render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
     }
 }
