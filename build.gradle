@@ -21,6 +21,10 @@ apply plugin:"org.grails.grails-web"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
 
+war {
+    archiveName="goals2019.war"
+}
+
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
