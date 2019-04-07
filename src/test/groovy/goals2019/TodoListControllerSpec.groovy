@@ -17,11 +17,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
     def cleanup() {
     }
 
-    void "test something"() {
-        expect:"fix me"
-            true == true
-    }
-
     void "add task will call service save"(){
         given:
         TodoItem newTask = new TodoItem(task: "new task to add")

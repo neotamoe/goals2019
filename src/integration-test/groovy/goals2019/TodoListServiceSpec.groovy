@@ -12,6 +12,11 @@ class TodoListServiceSpec extends Specification implements DataTest  {
     TodoListService todoListService = new TodoListService()
 
     def setup() {
+        TodoItem.saveAll(
+                new TodoItem(task: 'task one', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task two', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'task three', createdOn: new Date(), updatedOn: new Date(), isCompleted: false)
+        )
     }
 
     def cleanup() {
@@ -19,11 +24,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test add task'() {
         when: 'tasks are already in database'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task two', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task three', createdOn: new Date(), updatedOn: new Date())
-        )
 
         then:
         TodoItem.count() == 3
@@ -41,11 +41,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test add task sad path (null task)'() {
         when: 'tasks are already in database'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task two', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task three', createdOn: new Date(), updatedOn: new Date())
-        )
 
         then:
         TodoItem.count() == 3
@@ -62,11 +57,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test update task'() {
         when: 'tasks are already in database'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task two', createdOn: new Date(), updatedOn: new Date()),
-                new TodoItem(task: 'task three', createdOn: new Date(), updatedOn: new Date())
-        )
 
         then:
         TodoItem.count() == 3
@@ -87,11 +77,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test delete task'() {
         when: 'tasks are already in database'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date()),
-                new TodoItem(task: 'task two', createdOn: new Date()),
-                new TodoItem(task: 'task three', createdOn: new Date())
-        )
 
         then:
         TodoItem.count() == 3
@@ -107,31 +92,21 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test complete task'() {
         when: 'tasks are already in db'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
-        )
 
         then:
         TodoItem.count() == 3
         TodoItem taskCompleted = TodoItem.findById(2)
-        taskCompleted.isCompleted == false
+        !taskCompleted.isCompleted
 
         when: 'service is called to complete task'
         todoListService.completeTask(2)
 
         then:
-        taskCompleted.isCompleted == true
+        taskCompleted.isCompleted
     }
 
     def 'test moving task back to list'() {
         when: 'tasks are already in db'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
-        )
 
         then:
         TodoItem.count() == 3
@@ -153,11 +128,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test search task with single word'() {
         when: 'tasks are already in db'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
-        )
 
         then:
         TodoItem.count() == 3
@@ -178,11 +148,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test search task with two words'() {
         when: 'tasks are already in db'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
-        )
 
         then:
         TodoItem.count() == 3
@@ -207,11 +172,6 @@ class TodoListServiceSpec extends Specification implements DataTest  {
 
     def 'test getAll'() {
         when: 'tasks are already in db'
-        TodoItem.saveAll(
-                new TodoItem(task: 'task one', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task two', createdOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'task three', createdOn: new Date(), isCompleted: false)
-        )
 
         then:
         TodoItem.count() == 3
