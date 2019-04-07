@@ -36,7 +36,7 @@ class TodoListController {
     }
 
     def updateTask() {
-        log.debug("updating task: " + params.id + " with new task: " + params.task
+        log.debug("updating task: " + params.id + " with new task: " + params.task)
         def updatedItem = todoListService.updateTask(params.id, params.task)
         if(!updatedItem){
             log.error("Error in update task--id: ${params.id} NOT updated with new task ${params.task}")
