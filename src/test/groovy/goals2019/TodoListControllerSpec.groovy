@@ -74,12 +74,21 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
     void "test if editTask renders correct view"() {
         given:
         params.taskId = 1
+        controller.todoListService = Stub(TodoListService) {
+        }
 
         when:
         controller.editTask()
 
         then:
         '/todoList/editTask' == view
+
+        when:
+        controller.updateTask()
+        params.task = 'new task to add'
+
+        then:
+        controller.todoListService.updateTask(params.taskId, params.task)
     }
 
     void "test if completeTask calls right service method"() {
