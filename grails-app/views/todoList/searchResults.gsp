@@ -7,8 +7,19 @@
 <body>
 <div class="container" style="margin-top: 15px">
     <div>
-        <g:link controller="TodoList" action="index">Back to List</g:link>
-        <h1>Search Results for "${search}"</h1>
+        <div>
+            <g:link controller="TodoList" action="index">Back to List</g:link>
+        </div>
+        <div style="width: 40%;">
+            <h1>Search Results for "${search}"</h1>
+        </div>
+        <div style="display: inline-block; width: 49%;">
+            <h1>Search Tasks</h1>
+            <g:form name="search" controller="TodoList" action="searchTasks" method="POST" autocomplete="off" >
+                <input type="text" placeholder="What are you looking for?" name="search" style="width: 70%"/>
+                <button type="search">Search</button>
+            </g:form>
+        </div>
         <g:if test="${list?.size()>0}">
             <table class="table table-bordered">
                 <thead>
