@@ -68,6 +68,10 @@ class TodoListController {
         }
     }
 
+    def searchIndex() {
+        render(view: 'searchResults', model:[list: null, completed: null, search: params.search])
+    }
+
     def searchTasks() {
         log.debug("searching for task: " + params.search)
         List<TodoItem> list = new ArrayList<TodoItem>()
@@ -75,7 +79,9 @@ class TodoListController {
         List<TodoItem> results = todoListService.searchTasks(params.search)
         if(!results){
             log.error("Error in search tasks for ${params.search}")
-            forward(view: 'todoList', model: [item: results])
+//            forward(view: 'todoList', model: [item: results])
+            render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
+
         } else {
             results?.each {
                 if(it.isCompleted){

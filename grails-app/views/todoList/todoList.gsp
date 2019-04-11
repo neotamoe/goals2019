@@ -23,6 +23,11 @@
                     %{--<button type="search">Search</button>--}%
                 %{--</g:form>--}%
             %{--</div>--}%
+            <div style="display: inline-block">
+            <g:link controller="TodoList" action="searchIndex" params="${[search: ""]}">
+                <button>Search</button>
+            </g:link>
+            </div>
             <div>
                 <h1>To Do List</h1>
                 <g:if test="${list?.size()>0}">

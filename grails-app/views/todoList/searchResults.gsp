@@ -10,9 +10,11 @@
         <div>
             <g:link controller="TodoList" action="index">Back to List</g:link>
         </div>
-        <div style="width: 40%;">
-            <h1>Search Results for "${search}"</h1>
-        </div>
+        <g:if test="${search != ""}">
+            <div style="width: 40%;">
+                <h1>Search Results for "${search}"</h1>
+            </div>
+        </g:if>
         <div style="display: inline-block; width: 49%;">
             <h1>Search Tasks</h1>
             <g:form name="search" controller="TodoList" action="searchTasks" method="POST" autocomplete="off" >
@@ -54,8 +56,10 @@
                 </tbody>
             </table>
         </g:if>
-        <g:else>
+        <g:elseif test="${list?.isEmpty()}">
             <div>No tasks found that match your search.</div>
+        </g:elseif>
+        <g:else>
         </g:else>
     </div>
     <div>
