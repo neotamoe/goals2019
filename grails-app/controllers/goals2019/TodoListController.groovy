@@ -79,7 +79,6 @@ class TodoListController {
         List<TodoItem> results = todoListService.searchTasks(params.search)
         if(!results){
             log.error("Error in search tasks for ${params.search}")
-//            forward(view: 'todoList', model: [item: results])
             render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
 
         } else {
@@ -92,5 +91,11 @@ class TodoListController {
             }
             render(view: 'searchResults', model:[list: list, completed: completed, search: params.search])
         }
+    }
+
+    def viewCompleted() {
+        log.debug("viewing completed tasks")
+        List<TodoItem> completed  = TodoItem.findAllByIsCompleted(true)
+        render(view: 'completedTasks', model:[completed: completed])
     }
 }
