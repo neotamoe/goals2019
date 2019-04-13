@@ -28,7 +28,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.addTask("new task to add")
-
     }
 
     void "delete task will call service deleteTask"(){
@@ -116,4 +115,23 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         then:
         controller.todoListService.moveToList(params.taskId)
     }
+
+    void "test viewCompleted renders correct view"() {
+        when:
+        controller.viewCompleted()
+
+        then:
+        response.status == 200
+        '/todoList/completedTasks' == view
+    }
+
+    void "test searchIndex renders correct view"() {
+        when:
+        controller.searchIndex()
+
+        then:
+        response.status == 200
+        '/todoList/searchResults' == view
+    }
+
 }
