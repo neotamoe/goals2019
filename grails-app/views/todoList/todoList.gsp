@@ -6,10 +6,11 @@
     </head>
     <body>
         <div class="container">
+            <h1>To Do List</h1>
             <div style="display: inline-block; width: 50%;">
                 <h1>Add Task</h1>
                 <g:form name="addTask" controller="TodoList" action="addTask" method="POST" autocomplete="off" >
-                    <input type="text" placeholder="What's on your to do list?" name="task" style="width: 70%"/>
+                    <input type="text" placeholder="What's on your to do list?" name="task" style="width: 80%"/>
                     <button type="submit">Add Task</button>
                     <g:hasErrors>
                         <g:eachError><p><g:message error="${it}"/></p></g:eachError>
@@ -18,16 +19,15 @@
             </div>
             <div style="display: inline-block">
                 <g:link controller="TodoList" action="searchIndex" params="${[search: ""]}">
-                    <button>Search Tasks</button>
+                    Search Tasks
                 </g:link>
             </div>
-            <div style="display: inline-block">
+            <div style="display: inline-block; margin-left: 25px">
                 <g:link controller="TodoList" action="viewCompleted">
-                    <button>View Completed Tasks</button>
+                    View Completed Tasks
                 </g:link>
             </div>
             <div>
-                <h1>To Do List</h1>
                 <g:if test="${list?.size()>0}">
                     <table class="table table-bordered">
                         <thead>

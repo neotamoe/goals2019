@@ -7,10 +7,10 @@
 <body>
 <div class="container" style="margin-top: 15px">
     <div>
-        <div>
-            <g:link controller="TodoList" action="index">Back to List</g:link>
-        </div>
-        <h1>Completed Tasks</h1>
+        <g:link controller="TodoList" action="index">Back to List</g:link>
+    </div>
+    <h1>To Do List - Completed Tasks</h1>
+    <div>
         <g:if test="${completed?.size()>0}">
             <table class="table table-bordered">
                 <thead>
