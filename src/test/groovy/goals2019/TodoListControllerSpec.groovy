@@ -12,6 +12,9 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
     def setup() {
         new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
+        new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
+        new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
+
     }
 
     def cleanup() {
@@ -134,4 +137,22 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         '/todoList/searchResults' == view
     }
 
+    void "test if searchTasks calls right service method"() {
+        given:
+        params.search = "test"
+        List<TodoItem> searched = [
+                new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+        ]
+        controller.todoListService = Stub(TodoListService) {
+            searchTasks(_) >> searched
+        }
+
+        when:
+        controller.searchTasks()
+
+        then:
+        List<TodoItem> results = controller.todoListService.searchTasks(params.taskId)
+    }
 }
