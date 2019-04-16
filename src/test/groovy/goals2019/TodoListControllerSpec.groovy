@@ -24,6 +24,21 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         given:
         TodoItem newTask = new TodoItem(task: "new task to add")
         controller.todoListService = Stub(TodoListService) {
+            addTask(newTask) >> newTask
+        }
+
+        when:
+        controller.addTask(newTask)
+
+        then:
+        controller.todoListService.addTask("new task to add")
+    }
+
+    void "add task will return null if addTask in service fails"(){
+        given:
+        TodoItem newTask = new TodoItem(task: "new task to add")
+        controller.todoListService = Stub(TodoListService) {
+            addTask(newTask) >> null
         }
 
         when:
