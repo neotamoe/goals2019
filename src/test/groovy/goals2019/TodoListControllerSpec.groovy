@@ -34,20 +34,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService.addTask("new task to add")
     }
 
-    void "add task will return null if addTask in service fails"(){
-        given:
-        TodoItem newTask = new TodoItem(task: "new task to add")
-        controller.todoListService = Stub(TodoListService) {
-            addTask(newTask) >> null
-        }
-
-        when:
-        controller.addTask(newTask)
-
-        then:
-        controller.todoListService.addTask("new task to add")
-    }
-
     void "delete task will call service deleteTask"(){
         given:
         params.taskId = 1
@@ -59,7 +45,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.deleteTask(1)
-//        '/todoList/deleteTask.gsp' == view
     }
 
     void "update task will call service updateTask"(){
@@ -74,7 +59,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.updateTask(params.taskId, params.task)
-//        '/todoList/updateTask.gsp' == view
     }
 
     void "test if index loads"() {
