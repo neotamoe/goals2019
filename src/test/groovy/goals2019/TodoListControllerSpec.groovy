@@ -2,6 +2,7 @@ package goals2019
 
 import grails.testing.gorm.DataTest
 import grails.testing.web.controllers.ControllerUnitTest
+import org.springframework.web.servlet.ModelAndView
 import spock.lang.Specification
 
 class TodoListControllerSpec extends Specification implements ControllerUnitTest<TodoListController>, DataTest {
@@ -83,6 +84,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         '/todoList/editTask' == view
+        model.item == TodoItem.findById(1)
 
         when:
         controller.updateTask()
