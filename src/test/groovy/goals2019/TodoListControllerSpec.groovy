@@ -15,7 +15,9 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
         new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
         new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
-
+        new TodoItem(task: 'one and done', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
+        new TodoItem(task: 'two and through', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
+        new TodoItem(task: 'three and free', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
     }
 
     def cleanup() {
@@ -125,8 +127,10 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.viewCompleted()
 
         then:
+        List<TodoItem> completed = TodoItem.findAllByIsCompleted(true)
         response.status == 200
         '/todoList/completedTasks' == view
+        model.completed == completed
     }
 
     void "test searchIndex renders correct view"() {
