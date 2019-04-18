@@ -142,22 +142,44 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         '/todoList/searchResults' == view
     }
 
-    void "test if searchTasks calls right service method"() {
+    void "test if searchTasks calls right service method and returns correct model and view"() {
         given:
         params.search = "test"
-        List<TodoItem> searched = [
+        List<TodoItem> results = [
                 new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
                 new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
-                new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: true),
         ]
+        List<TodoItem> completed = new ArrayList<TodoItem>()
+        List<TodoItem> list = new ArrayList<TodoItem>()
         controller.todoListService = Stub(TodoListService) {
-            searchTasks(_) >> searched
+            searchTasks(_) >> results
         }
 
         when:
         controller.searchTasks()
 
         then:
-        List<TodoItem> results = controller.todoListService.searchTasks(params.taskId)
+        results == controller.todoListService.searchTasks(params.taskId)
+
+        when:
+        results != null
+        searchTasksSort(list, completed, results)
+
+        then:
+        '/todoList/searchResults' == view
+        model.search == "test"
+        model.completed == completed
+        model.list == list
+    }
+
+    private searchTasksSort(List<TodoItem> list, List<TodoItem> completed, List<TodoItem> results){
+        results?.each {
+            if(it.isCompleted){
+                completed.add(it)
+            } else {
+                list.add(it)
+            }
+        }
     }
 }
