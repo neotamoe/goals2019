@@ -35,6 +35,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.addTask("new task to add")
+        response.forwardedUrl == '/todoList/index'
     }
 
     void "delete task will call service deleteTask"(){
@@ -48,6 +49,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.deleteTask(1)
+        response.redirectedUrl == '/todoList/index'
     }
 
     void "update task will call service updateTask"(){
@@ -62,17 +64,22 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.updateTask(params.taskId, params.task)
+        response.redirectedUrl == '/todoList/index'
     }
 
     void "test if index loads"() {
+        given:
+        List<TodoItem> list = TodoItem.findAllByIsCompleted(false)
+        List<TodoItem> completed = TodoItem.findAllByIsCompleted(true)
+
         when:
         controller.index()
-
 
         then:
         response.status == 200
         '/todoList/todoList' == view
-
+        controller.modelAndView.model.list == list
+        controller.modelAndView.model.completed == completed
     }
 
     void "test if editTask renders correct view and calls updateTask"() {
