@@ -29,6 +29,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService = Stub(TodoListService) {
             addTask(newTask) >> newTask
         }
+        def persistedItem
 
         when:
         controller.addTask(newTask)
@@ -36,6 +37,23 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         then:
         controller.todoListService.addTask("new task to add")
         response.forwardedUrl == '/todoList/index'
+    }
+
+    void "add task sad path"(){
+        given:
+        TodoItem newTask = new TodoItem(task: "new task to add")
+        controller.todoListService = Mock(TodoListService) {
+            addTask(newTask) >> null
+        }
+
+        when:
+        controller.addTask(newTask)
+        def persistedItem = controller.todoListService.addTask("new task to add")
+
+        then:
+        persistedItem == null
+        response.forwardedUrl == '/todoList/index'
+        controller.modelAndView == null  // null because we are forwarding, not render
     }
 
     void "delete task will call service deleteTask"(){
