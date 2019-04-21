@@ -85,6 +85,29 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         response.redirectedUrl == '/todoList/index'
     }
 
+    void "update task sad path save fail"(){
+        given:
+        params.id = 1
+        params.task = 'new task to add'
+        controller.todoListService = Mock(TodoListService) {
+            updateTask(params.id, params.task) >> null
+        }
+
+        when:
+        controller.updateTask()
+        def updatedItem = controller.todoListService.updateTask(params.taskId, params.task)
+
+        then:
+        updatedItem == null
+
+        when:
+        !updatedItem
+
+        then:
+        controller.modelAndView == null
+        response.forwardedUrl .startsWith('/todoList/index')
+    }
+
     void "test if index loads"() {
         given:
         List<TodoItem> list = TodoItem.findAllByIsCompleted(false)
