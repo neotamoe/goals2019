@@ -105,7 +105,7 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.modelAndView == null
-        response.forwardedUrl .startsWith('/todoList/index')
+        response.forwardedUrl.startsWith('/todoList/index')
     }
 
     void "test if index loads"() {
@@ -157,6 +157,28 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService.completeTask(params.taskId)
     }
 
+    void "test completeTask sad path"() {
+        given:
+        params.taskId = 1
+        controller.todoListService = Mock(TodoListService) {
+            completeTask(params.taskId) >> null
+        }
+
+        when:
+        controller.completeTask()
+        def completedTask = controller.todoListService.completeTask(params.taskId)
+
+        then:
+        completedTask == null
+
+        when:
+        !completedTask
+
+        then:
+        controller.modelAndView == null
+        response.forwardedUrl.startsWith('/todoList/index')
+    }
+
     void "test if moveToList calls right service method"() {
         given:
         params.taskId = 1
@@ -168,6 +190,28 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
 
         then:
         controller.todoListService.moveToList(params.taskId)
+    }
+
+    void "test moveToList sad path - fails to save"() {
+        given:
+        params.taskId = 1
+        controller.todoListService = Mock(TodoListService) {
+            moveToList(params.taskId) >> null
+        }
+
+        when:
+        controller.moveToList()
+        def movedItem = controller.todoListService.moveToList(params.taskId)
+
+        then:
+        movedItem == null
+
+        when:
+        !movedItem
+
+        then:
+        controller.modelAndView == null
+        response.forwardedUrl.startsWith('/todoList/index')
     }
 
     void "test viewCompleted renders correct view"() {
