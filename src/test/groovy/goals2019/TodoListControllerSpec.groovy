@@ -265,6 +265,32 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         model.list == list
     }
 
+    void "test searchTasks when no search results"() {
+        given:
+        params.search = "test"
+        List<TodoItem> results = []
+        List<TodoItem> completed = new ArrayList<TodoItem>()
+        List<TodoItem> list = new ArrayList<TodoItem>()
+        controller.todoListService = Stub(TodoListService) {
+            searchTasks(_) >> results
+        }
+
+        when:
+        controller.searchTasks()
+
+        then:
+        results == controller.todoListService.searchTasks(params.taskId)
+
+        when:
+        results.isEmpty()
+
+        then:
+        '/todoList/searchResults' == view
+        model.search == "test"
+        model.completed == completed
+        model.list == list
+    }
+
     private searchTasksSort(List<TodoItem> list, List<TodoItem> completed, List<TodoItem> results){
         results?.each {
             if(it.isCompleted){
