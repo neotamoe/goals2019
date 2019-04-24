@@ -26,6 +26,7 @@ class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
 
         then:
         !domain.validate(['task'])
+        domain.errors['task'].code == 'blank'
     }
 
     void 'test task can have a maximum of 255 characters'() {
@@ -45,12 +46,31 @@ class TodoItemSpec extends Specification implements DomainUnitTest<TodoItem> {
         domain.validate(['task'])
     }
 
-    void 'test createdOn accepts a date without timezone'() {
+    void 'test createdOn and updatedOn accepts a date'() {
         when: 'for a date provided'
         Date today = new Date()
         domain.createdOn = today
+        domain.updatedOn = today
 
         then: 'test validation passes'
         domain.validate(['createdOn'])
+        domain.validate(['updatedOn'])
+    }
+
+    void 'test updatedOn, completedOn, and isCompleted can be null'() {
+        when:
+        domain.updatedOn = null
+        domain.createdOn = null
+        domain.isCompleted = null
+
+        then:
+        domain.validate(['updatedOn'])
+        !domain.errors['updatedOn']
+
+        domain.validate(['createdOn'])
+        !domain.errors['createdOn']
+
+        domain.validate(['isCompleted'])
+        !domain.errors['isCompleted']
     }
 }
