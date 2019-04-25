@@ -12,12 +12,14 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
     }
 
     def setup() {
-        new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
-        new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
-        new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false).save()
-        new TodoItem(task: 'one and done', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
-        new TodoItem(task: 'two and through', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
-        new TodoItem(task: 'three and free', createdOn: new Date(), updatedOn: new Date(), isCompleted: true).save()
+        TodoItem.saveAll(
+                new TodoItem(task: 'create test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'test again', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'one more test', createdOn: new Date(), updatedOn: new Date(), isCompleted: false),
+                new TodoItem(task: 'one and done', createdOn: new Date(), updatedOn: new Date(), isCompleted: true),
+                new TodoItem(task: 'two and through', createdOn: new Date(), updatedOn: new Date(), isCompleted: true),
+                new TodoItem(task: 'three and free', createdOn: new Date(), updatedOn: new Date(), isCompleted: true)
+        )
     }
 
     def cleanup() {
@@ -29,7 +31,6 @@ class TodoListControllerSpec extends Specification implements ControllerUnitTest
         controller.todoListService = Stub(TodoListService) {
             addTask(newTask) >> newTask
         }
-        def persistedItem
 
         when:
         controller.addTask(newTask)
